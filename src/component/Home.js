@@ -39,7 +39,8 @@ class Home extends Component {
             //     </div>
             // </nav>
             <div>
-                <Navbar username={this.props.username} />
+                <Navbar username={this.props.username} />  
+                <div style={{marginLeft: '46%'}}><a href="https://tmc.or.th/covid19/" style={{fontSize: '24px'}}>Details Covid-19 </a></div>          
                 <Comment username={this.props.username} />
             </div>
         )

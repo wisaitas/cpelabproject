@@ -16,19 +16,29 @@ class Login extends Component {
     }
 
     login(e) {
+        var db = fire.firestore()
         e.preventDefault();
         fire.auth().signInWithEmailAndPassword(this.state.email,this.state.password).then((u)=>{
         }).catch((error) => {
-            console.log(error)
+            alert(error)
+        })
+        db.collection('inputuser').doc(this.state.email).set({
+            name: this.state.username,
         })
     }
 
     signup(e){
         e.preventDefault();
-        fire.auth().createUserWithEmailAndPassword(this.state.email,this.state.password)
-        test(this.state.email)
-        .catch((error) => {
-            console.log(error);
+        var db = fire.firestore()
+        fire.auth().createUserWithEmailAndPassword(this.state.email,this.state.password).then(() => {
+            db.collection('inputuser').doc(this.state.email).set({
+                name: this.state.username,
+                email: this.state.email,
+                password: this.state.password
+            })
+            alert('signup success')
+        }).catch((err) =>{
+            alert(err)
         })
     }
 
@@ -62,7 +72,7 @@ class Login extends Component {
                             <div className="field is-grouped">
                                 <div className="control">
                                     <button type="submit" onClick={this.login} class="button is-link">Login</button>
-                                    <button onClick={this.signup} style={{marginLeft: '25px'}} className="button is-link">Sign up</button>
+                                    <button onClick={this.signup} style={{marginLeft: '25px'}} className="button is-link">Signup</button>
                                 </div>
                             </div>
                         </form>
